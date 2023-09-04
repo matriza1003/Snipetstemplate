@@ -35,8 +35,8 @@
 <header>
     <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
         <div class="container">
-            <a class="navbar-brand" href="/">
-                <img src="images/logo.png" width="32" height="32" alt="">
+            <a class="navbar-brand" href="{% url 'home' %}">
+                <img src="{% static 'images/logo.png' %}" width="32" height="32" alt="">
                 PythonBin
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
@@ -46,8 +46,8 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <ul class="navbar-nav mr-auto">
-                    <li class="form-inline"><a class="btn btn-outline-secondary" href="...">Добавить сниппет</a></li>
-                    <li class="form-inline"><a class="btn btn-outline-info" href="...">Посмотреть
+                    <li class="form-inline"><a class="btn btn-outline-secondary" href="{% url 'add' %}">Добавить сниппет</a></li>
+                    <li class="form-inline"><a class="btn btn-outline-info" href="{% url 'list'%}">Посмотреть
                         сниппеты</a></li>
                 </ul>
             </div>
@@ -80,23 +80,19 @@
                     <tr>
                         <th scope="col">ID</th>
                         <th scope="col">Название</th>
+                        <th scope="col">Язык програмирования</th>
                         <th scope="col">Дата создания</th>
                     </tr>
                     </thead>
                     <tbody>
-
-                    <tr>
-                        <td scope="row">1</td>
-                        <td><a href="/snippets/1">Пример сниппета</a></td>
-                        <td>23.05.2019 11:32</td>
-                    </tr>
-
-                    <tr>
-                        <td scope="row">2</td>
-                        <td><a href="/snippets/2">И ещё один пример</a></td>
-                        <td>23.05.2019 11:34</td>
-                    </tr>
-
+                    {% for i in snipet %}
+                        <tr>
+                        <td scope="row">{{i.id}}</td>
+                        <td><a href="{% url 'list-page' i.id %}">{{i.name}}</a></td>
+                        <td>{{i.lang}}</td>
+                        <td>{{i.creation_date}}</td>
+                        </tr>
+                    {% endfor %}
                     </tbody>
                 </table>
                 <div align="right">

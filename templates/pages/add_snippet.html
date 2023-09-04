@@ -35,8 +35,8 @@
 <header>
     <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
         <div class="container">
-            <a class="navbar-brand" href="...">
-                <img src="images/logo.png" width="32" height="32" alt="">
+            <a class="navbar-brand" href="{%url 'home' %}">
+                <img src="{% static 'images/logo.png' %}" width="32" height="32" alt="">
                 PythonBin
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
@@ -45,8 +45,8 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <ul class="navbar-nav mr-auto">
-                    <li class="form-inline"><a class="btn btn-outline-secondary" href="">Добавить сниппет</a></li>
-                    <li class="form-inline"><a class="btn btn-outline-info" href="...">Посмотреть
+                    <li class="form-inline"><a class="btn btn-outline-secondary" href="{% url 'add' %}">Добавить сниппет</a></li>
+                    <li class="form-inline"><a class="btn btn-outline-info" href="{% url 'list' %}">Посмотреть
                         сниппеты</a></li>
                 </ul>
             </div>
@@ -67,30 +67,11 @@
         <div class="row">
             <div class="col">
                 <form action="" method="post">
-                    <div class="form-group row">
-                        <div class="col-8">
-                            <input type="text" name="name" class="form-control form-control-lg" placeholder="Название сниппета">
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <div class="col-8">
-                            <select class="form-control" name="lang">
-                                <option>Python</option>
-                                <option>C++</option>
-                                <option>JavaScript</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <div class="col-8">
-                            <textarea cols="96" rows="10" placeholder="Код сниппета"></textarea>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <div class="col-8">
-                            <input type="submit" class="btn btn-primary btn-block" value="Сохранить">
-                        </div>
-                    </div>
+                    {% csrf_token %}
+                    <table>
+                        {{ form }}
+                    </table>
+                    <button type="submit">Создать</button>
                 </form>
 
             </div>
