@@ -6,6 +6,30 @@
 <br>
 <br>
 <br>
+{% if type == "view" %}
 <div> Name {{ item.name }}</div>
 <div> CODE {{ item.code }}</div>
+{%elif type == "edit"%}
+<form action="" method="post">
+    {% csrf_token %}
+    <div class ='row'>
+        <div class="col col-8">
+            Название: <input name='name' type="text" value="{{item.name}}" class="form-control">
+        </div>
+        <div class="col col-4">
+            Дата создания: <input name="creation_date" type="text" value="{{item.creation_date}}" class="form-control">
+        </div>
+        <div class="col col-5">
+            Дата создания: <input name="code" type="text" value="{{item.code}}" class="form-control">
+        </div>
+    </div>
+    <button type="submit">Обновить</button>
+</form>
+
+{% endif %}
+
+
+
+
+
 {% endblock %}

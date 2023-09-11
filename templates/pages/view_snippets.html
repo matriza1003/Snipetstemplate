@@ -82,6 +82,8 @@
                         <th scope="col">Название</th>
                         <th scope="col">Язык програмирования</th>
                         <th scope="col">Дата создания</th>
+                        <th scope="col">Удалить снипет</th>
+                        <th scope="col">ред.</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -91,6 +93,13 @@
                         <td><a href="{% url 'list-page' i.id %}">{{i.name}}</a></td>
                         <td>{{i.lang}}</td>
                         <td>{{i.creation_date}}</td>
+                        <td>
+                            <table>
+                                <a href="{% url 'delete' i.id %}">DELETE</a>
+                            </table>
+                            
+                        </td>
+                        <td><a href ="{% url 'edit' i.id %}">Редактировать</a></td>
                         </tr>
                     {% endfor %}
                     </tbody>
