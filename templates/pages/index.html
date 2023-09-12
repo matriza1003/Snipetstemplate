@@ -15,23 +15,6 @@
                 <p>На этом сайте ты сможешь сохранить свои заготовки кода на различных языках программирования<br>
                     А также делиться ими с другими пользователями...
                 <hr>
-                {% if request.user.is_authenticated %}
-                     Welcome, {{request.user.username }}
-                     <form action="{% url 'log-out' %}" target="_blank">
-                        <button>Разлогинится </button>
-                    </form>
-                {% else %}
-                <form method="post" action="url">{% csrf_token %}
-                    <input name="username"  type="text" placeholder="username">
-                    <input name="password"  type="password" placeholder="password">
-                    <button type="submit">login</button>
-                </form>
-                <form action="" method="post">
-                    {% csrf_token %}
-                    {{ form.as_p }}
-                    <input type="submit" value="Создать пользователя">
-                </form>
-                {% endif %}
             </div>
         </div>
 
