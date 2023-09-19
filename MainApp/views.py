@@ -1,8 +1,9 @@
 from django.http import Http404,HttpResponseRedirect
 from django.shortcuts import render, redirect
 from MainApp.models import Snippet
-from MainApp.forms import SnippetForm
+from MainApp.forms import SnippetForm,UserRegistrationForm
 from django.contrib import auth
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect
 from django.core.exceptions import ObjectDoesNotExist
 
@@ -11,7 +12,7 @@ def index_page(request):
     context = {'pagename': 'PythonBin'}
     return render(request, 'pages/index.html', context)
 
-
+@login_required
 def add_snippet_page(request):
     if request.method == "GET":
         form = SnippetForm()
@@ -21,7 +22,10 @@ def add_snippet_page(request):
     else:
         form = SnippetForm(request.POST)
         if form.is_valid():
-            form.save()
+            snippet = form.save(commit=False)
+            if request.user.is_authenticated:
+                snippet.user = request.user
+                snippet.save()
             return redirect('list')
         else:
             return render(request,'pages/add_snippet.html',{'form': SnippetForm()})
@@ -69,7 +73,10 @@ def login_page(request):
            auth.login(request, user)
        else:
            # Return error message
-           pass
+           context = {
+               'error':["wrong user name or passwordS"]
+           }
+           return render(request,'pages/index.html',context)
    return redirect('home')
 
 def snippets_edit(request,value):
@@ -91,3 +98,19 @@ def snippets_edit(request,value):
         snipet.creation_date = form_date["creation_date"]
         snipet.save()
         return redirect('list')
+    
+def create_user(request):
+    context = {
+        "pagename":"регистрация пользователя"
+    }
+    if request.method == "GET":
+        form = UserRegistrationForm()
+        context["form"] = form
+        return render(request,"pages/registration.html",context)
+    if request.method == "POST":
+        form = UserRegistrationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('home')
+        context['form'] = form
+        return render(request,'pages/registration.html',context)

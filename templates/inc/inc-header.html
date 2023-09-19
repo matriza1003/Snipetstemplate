@@ -33,13 +33,15 @@
                     <input name="password"  type="password" placeholder="password">
                     <button type="submit">login</button>
                 </form>
-                <form action="" method="post">
-                    {% csrf_token %}
-                    {{ form.as_p }}
-                    <input type="submit" value="Создать пользователя">
-                </form>
                 {% endif %}
+                {% if error %}
+                {% for i in error %}
+                <dev>{{i}} </dev>
+                {% endfor %}
+                {% endif %}
+
                         </ul>
+                        <a style="padding-left: 10px ;" href=" {% url 'register'  %}" type="button"> Регистрация</a>
                     </div>
                 </div>
             </nav>
